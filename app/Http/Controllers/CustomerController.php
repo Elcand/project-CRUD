@@ -13,8 +13,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        // $customers = Customer::all();
-        return view('customer.index');
+        $customers = Customer::all();
+        return view('customer.index', compact('customers'));
     }
 
     /**
@@ -36,7 +36,7 @@ class CustomerController extends Controller
             $image = $request->file('image');
             $filename = $image->store('', 'public');
             $filepath  = '/uploads/' . $filename;
-            $customer->image = $filepath;   
+            $customer->image = $filepath;
         }
 
         $customer->first_name = $request->first_name;
@@ -47,7 +47,7 @@ class CustomerController extends Controller
         $customer->about = $request->about;
         $customer->save();
 
-        return redirect()->route('home');
+        return redirect()->route('customers.index');
     }
 
     /**
