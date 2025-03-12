@@ -37,7 +37,7 @@ class CustomerController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = $image->store('', 'public');
-            $filepath  = '/uploads/' . $filename;
+            $filepath  = 'storage/uploads/' . $filename;
             $customer->image = $filepath;
         }
 
@@ -57,7 +57,8 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        /////////////////////////////////////////
+        $customer = Customer::findOrFail($id);
+        return view('customer.show', compact('customer'));
     }
 
     /**
