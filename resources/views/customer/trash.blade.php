@@ -3,17 +3,17 @@
 @section('content')
     <div class="row justify-content-center mt-5">
         <div class="col-md-8">
-            <h3>Customers</h3>
+            <h3>Trash</h3>
             <div class="card">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-2">
-                            <a href="{{ route('customers.create') }}" class="btn"
-                                style="background-color: #4643d3; color: white;"><i class="fas fa-plus"></i> Create
-                                Customer</a>
+                            <a href="{{ route('customers.index') }}" class="btn"
+                                style="background-color: #4643d3; color: white;"><i class="fas fa-chevron-left"></i> Back
+                            </a>
                         </div>
-                        <div class="col-md-6">
-                            <form action="{{ route('customers.index') }} " method="GET">
+                        <div class="col-md-8">
+                            <form action="{{ route('customers.trash') }} " method="GET">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Search anything..."
                                         aria-describedby="button-addon2" name="search">
@@ -23,7 +23,7 @@
                             </form>
                         </div>
                         <div class="col-md-2">
-                            <form action="{{ route('customers.index') }}" method="GET" class="form-order">
+                            <form action="{{ route('customers.trash') }}" method="GET" class="form-order">
                                 @csrf
                                 <div class="input-group mb-3">
                                     <select class="form-select" name="order" id=""
@@ -34,11 +34,6 @@
                                 </div>
                         </div>
                         </form>
-                        <div class="col-md-2 text-end">
-                            <a href="{{ route('customers.trash') }}" class="btn btn-dark">
-                                <i class="fas fa-trash-alt"></i> Trash
-                            </a>
-                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -64,10 +59,8 @@
                                     <td>{{ $customer->phone }}</td>
                                     <td>{{ $customer->bank_account_number }}</td>
                                     <td>
-                                        <a href="{{ route('customers.edit', $customer->id) }}" style="color: #2c2c2c;"
-                                            class="ms-1 me-1"><i class="far fa-edit"></i></a>
                                         <a href="{{ route('customers.show', $customer->id) }}" style="color: #2c2c2c;"
-                                            class="ms-1 me-1"><i class="far fa-eye"></i></a>
+                                            class="ms-1 me-1"><i class="fas fa-undo"></i></a>
                                         <a href="javascript:;"
                                             onclick="if(confirm('Are you sure to delete this?'))  $('.form-{{ $customer->id }}').submit()"
                                             style="color: #2c2c2c;" class="ms-1 me-1">

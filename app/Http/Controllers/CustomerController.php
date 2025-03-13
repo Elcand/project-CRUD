@@ -25,7 +25,6 @@ class CustomerController extends Controller
                 ->orWhere('email', 'LIKE', "%{$search}%");
         })->orderBy('id', $request->has('order') && $request->order == 'asc' ? 'asc' : 'desc')->get();
 
-
         return view('customer.index', compact('customers'));
     }
 
@@ -118,5 +117,18 @@ class CustomerController extends Controller
         $customer->delete();
 
         return redirect()->route('customers.index')->with('success', 'Berhasil menghapus data');
+    }
+
+    public function trashIndex(Request $request)
+    {
+        $customers = Customer::when($request->has('search'), function ($query) use ($request) {
+            $search = $request->input('search');
+            $query->where('first_name', 'LIKE', "%{$search}%")
+                ->orWhere('last_name', 'LIKE', "%{$search}%")
+                ->orWhere('phone', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
+        })->orderBy('id', $request->has('order') && $request->order == 'asc' ? 'asc' : 'desc')->onlyTrashed()->get();
+        return view('customer.trash', compact('customers'));
+        // dd('bisa');
     }
 }
