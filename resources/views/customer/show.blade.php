@@ -10,7 +10,7 @@
                 <div class="px-4 pt-0 pb-4 cover">
                     <div class="media align-items-end profile-head d-flex">
                         <div class="profile mr-3">
-                            <img src="{{ $customer->image }}" alt="..." width="130"
+                            <img src="{{ asset('storage/' . $customer->image) }}" alt="..." width="130"
                                 class="rounded mb-2 img-thumbnail bg-dark" style="border-radius: 50%;">
                         </div>
                         <div class="media-body mb-5 text-white">

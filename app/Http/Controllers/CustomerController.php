@@ -8,14 +8,24 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
+use function Laravel\Prompts\search;
+
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::all();
+        $customers = Customer::when($request->has('search'), function ($query) use ($request) {
+            $search = $request->input('search');
+            $query->where('first_name', 'LIKE', "%{$search}%")
+                ->orWhere('last_name', 'LIKE', "%{$search}%")
+                ->orWhere('phone', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%");
+        })->orderBy('id', 'desc')->get();
+
+
         return view('customer.index', compact('customers'));
     }
 
