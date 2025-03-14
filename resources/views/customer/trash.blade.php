@@ -59,14 +59,14 @@
                                     <td>{{ $customer->phone }}</td>
                                     <td>{{ $customer->bank_account_number }}</td>
                                     <td>
-                                        <a href="{{ route('customers.show', $customer->id) }}" style="color: #2c2c2c;"
+                                        <a href="{{ route('customers.restore', $customer->id) }}" style="color: #2c2c2c;"
                                             class="ms-1 me-1"><i class="fas fa-undo"></i></a>
                                         <a href="javascript:;"
                                             onclick="if(confirm('Are you sure to delete this?'))  $('.form-{{ $customer->id }}').submit()"
                                             style="color: #2c2c2c;" class="ms-1 me-1">
                                             <i class="fas fa-trash-alt"></i></a>
                                         <form class="form-{{ $customer->id }}"
-                                            action="{{ route('customers.destroy', $customer->id) }}"
+                                            action="{{ route('customers.force.destroy', $customer->id) }}"
                                             method="POST"style="display: none;">
                                             @csrf
                                             @method('DELETE')

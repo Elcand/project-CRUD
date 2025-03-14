@@ -113,7 +113,7 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         $customer = Customer::findOrFail($id);
-        File::delete(public_path($customer->image));
+        // File::delete(public_path($customer->image));
         $customer->delete();
 
         return redirect()->route('customers.index')->with('success', 'Berhasil menghapus data');
@@ -130,5 +130,24 @@ class CustomerController extends Controller
         })->orderBy('id', $request->has('order') && $request->order == 'asc' ? 'asc' : 'desc')->onlyTrashed()->get();
         return view('customer.trash', compact('customers'));
         // dd('bisa');
+    }
+
+    public function restore(int $id)
+    {
+        $customer = Customer::onlyTrashed()->findOrFail($id);
+        $customer->restore();
+        // dd($customer);
+
+        return redirect()->back();
+    }
+
+    public function forceDestroy(int $id)
+    {
+        $customer = Customer::onlyTrashed()->findOrFail($id);
+        // dd($customer);
+        File::delete(public_path($customer->image));
+        $customer->forceDelete();
+
+        return redirect()->back();
     }
 }
